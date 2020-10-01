@@ -11,10 +11,11 @@ def main():
     #     .config("spark.some.config.option", "some-value") \
     #     .getOrCreate()
     sc = SparkContext("local", "PySpark Word Count Exmaple")
+
     la = sc.textFile('./Dataset/sample.txt')
     words = la.flatMap(lambda word: word.lower().split(" "))
     rdd = words.map(lambda word: (word, 1)).reduceByKey(lambda a, b: a + b)
-    rdd.map(lambda (k,v): (v,k)).sortByKey(False)
+    # rdd.map(lambda (k,v): (v,k)).sortByKey(False)
     rdd.saveAsTextFile("sample_counts.txt")
 
 
